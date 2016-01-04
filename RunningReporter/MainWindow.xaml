@@ -1,0 +1,43 @@
+﻿<Window
+    x:Class="RunningReporter.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:runningReporter="clr-namespace:RunningReporter"
+    Title="Running Reporter" mc:Ignorable="d">
+    
+    <Window.Resources>
+        <Style x:Key="mCommandButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Command" Value="{Binding Command}" />
+            <Setter Property="Content" Value="{Binding DisplayText}" />
+        </Style>
+    </Window.Resources>
+    
+    <Window.DataContext>
+        <runningReporter:ReporterViewModel />
+    </Window.DataContext>
+    
+    <StackPanel>
+        <GroupBox Header="DropBox Path">
+            <TextBox Text="{Binding BaseDirectoryPath, UpdateSourceTrigger=PropertyChanged}" />
+        </GroupBox>
+        <GroupBox Header="Time Range">
+            <StackPanel Orientation="Horizontal">
+                <Button DataContext="{Binding PreviousWeekCommand}" Style="{StaticResource mCommandButtonStyle}"/>
+                <Label Content="From" VerticalContentAlignment="Center"/>
+                <DatePicker SelectedDate="{Binding StartDateInclusive}"/>
+                <Label Content="Through" VerticalContentAlignment="Center"/>
+                <DatePicker SelectedDate="{Binding EndDateInclusive}"/>
+                <Button DataContext="{Binding NextWeekCommand}" Style="{StaticResource mCommandButtonStyle}"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Results">
+            <WebBrowser
+                Height="500"
+                runningReporter:BrowserBehavior.Html="{Binding RenderedHtml}"/>
+        </GroupBox>
+        <Button DataContext="{Binding ClipboardCommand}" Style="{StaticResource mCommandButtonStyle}"/>
+    </StackPanel>
+    
+</Window>
