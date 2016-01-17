@@ -11,16 +11,8 @@ C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\obj\x86\Debug\Ru
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\obj\x86\Debug\RunningReporter.pdb
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\RunningReporter.exe.config
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\GalaSoft.MvvmLight.dll
-C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\GalaSoft.MvvmLight.Extras.dll
-C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\Microsoft.Practices.ServiceLocation.dll
-C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\System.Windows.Interactivity.dll
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\GalaSoft.MvvmLight.pdb
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\GalaSoft.MvvmLight.xml
-C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\GalaSoft.MvvmLight.Extras.pdb
-C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\GalaSoft.MvvmLight.Extras.xml
-C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
-C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\Microsoft.Practices.ServiceLocation.xml
-C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\System.Windows.Interactivity.xml
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\obj\x86\Debug\RunningReporter_MarkupCompile.lref
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\System.Windows.Controls.Input.Toolkit.dll
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\System.Windows.Controls.Layout.Toolkit.dll
@@ -32,3 +24,7 @@ C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\obj\x86\Debug\Th
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\obj\x86\Debug\Themes\MetroDark\Theme.Colors.baml
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\obj\x86\Debug\App.baml
 C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\obj\x86\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\RunningReporter.exe.manifest
+C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\bin\Debug\RunningReporter.application
+C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\obj\x86\Debug\RunningReporter.exe.manifest
+C:\Users\Caleb\Documents\GitHub\RunningReporter\RunningReporter\obj\x86\Debug\RunningReporter.application

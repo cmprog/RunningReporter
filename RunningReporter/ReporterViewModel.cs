@@ -50,6 +50,8 @@ namespace RunningReporter
             this.StartDateInclusive = lWeekStartLocal;
             this.EndDateInclusive = lWeekStartLocal.AddDays(6);
 
+            Application.Current.Exit += CurrentApplication_Exit;
+
             if (this.IsInDesignMode)
             {
                 this.BaseDirectoryPath = "Hello, world!";
@@ -60,9 +62,23 @@ namespace RunningReporter
             }
         }
 
+        private void CurrentApplication_Exit(object sender, ExitEventArgs e)
+        {
+            this.mRefreshTimer.Stop();
+            this.mRefreshTimer.Dispose();
+        }
+
         #endregion
 
         #region Instance Properties ----------------------------------------------------
+
+        public override void Cleanup()
+        {
+            base.Cleanup();
+
+            this.mRefreshTimer.Stop();
+            this.mRefreshTimer.Dispose();
+        }
 
         public string BaseDirectoryPath
         {

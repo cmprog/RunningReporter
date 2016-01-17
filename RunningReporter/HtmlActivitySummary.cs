@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Web.Mvc;
+using System.Web.UI;
 
 namespace RunningReporter
 {
@@ -17,11 +15,10 @@ namespace RunningReporter
         private string mFullHtml;
 
         private readonly List<HtmlActivitySummaryColumn> mAvailableColumns = new List<HtmlActivitySummaryColumn> {
-            new HtmlActivitySummaryColumn("Day", x => x.StartedOnLocal.DayOfWeek.ToString()),
-            new HtmlActivitySummaryColumn("Distance", x => x.TotalDistanceMiles.ToString("0.00")),
-            new HtmlActivitySummaryColumn("Avg Pace", x => x.AverageTimePerMile.ToString("m\\:ss")),
-            new HtmlActivitySummaryColumn("Avg HR", x => x.AverageHearRateBpm.GetValueOrDefault(0.0).ToString("0.0"),
-                x => x.Any(z => z.AverageHearRateBpm.HasValue)),
+            new HtmlActivityDayColumn(),
+            new HtmlActivityDistanceColumn(),
+            new HtmlActivityAvgPaceColumn(),
+            new HtmlActivityAvgHeartRateColumn(),
         };
 
         private readonly List<HtmlActivitySummaryColumn> mApplicableColumns;
@@ -34,60 +31,57 @@ namespace RunningReporter
 
         private void LoadValues()
         {
-            var lRowStringBuilder = new StringBuilder();
+            const string lcCssPath = @"https://s0.wp.com/wp-content/themes/pub/twentyten/style.css";
 
+            var lStringBuilder = new StringBuilder();
+
+            lStringBuilder.Append("<table>");
+            lStringBuilder.Append("<tr>");
             foreach (var lColumn in this.mApplicableColumns)
             {
-                var lHeaderBuilder = new TagBuilder("th");
-                lHeaderBuilder.InnerHtml = lColumn.HeaderText;
-                lRowStringBuilder.Append(lHeaderBuilder);
+                lStringBuilder.Append("<th>").Append(lColumn.HeaderText).Append("</th>");
             }
+            lStringBuilder.Append("</tr>");
 
-            var lRowBuilder = new TagBuilder("tr");
-            lRowBuilder.InnerHtml = lRowStringBuilder.ToString();
-            lRowStringBuilder.Clear();
 
-            var lTableStringBuilder = new StringBuilder();
-            lTableStringBuilder.Append(lRowBuilder);
+            const string lcNumericFormat = "<td style=\"text-align: right\">{0}</td>";
+            const string lcTextFormat = "<td>{0}</td>";
 
             foreach (var lSummary in this.mSummaries.OrderBy(x => x.StartedOnLocal))
             {
-                lRowStringBuilder.Clear();
-
+                lStringBuilder.Append("<tr>");
                 foreach (var lColumn in this.mApplicableColumns)
                 {
-                    var lDataBuilder = new TagBuilder("td");
-                    lDataBuilder.InnerHtml = lColumn.GetValue(lSummary);
-                    lRowStringBuilder.Append(lDataBuilder);
+                    var lStringFormat = lColumn.IsNumeric ? lcNumericFormat : lcTextFormat;
+                    lStringBuilder.AppendFormat(lStringFormat, lColumn.GetTextValue(lSummary));
                 }
-
-                lRowBuilder.InnerHtml = lRowStringBuilder.ToString();
-                lRowStringBuilder.Clear();
-
-                lTableStringBuilder.Append(lRowBuilder);
+                lStringBuilder.Append("</tr>");
             }
 
-            var lTableBuilder = new TagBuilder("table");
-            lTableBuilder.InnerHtml = lTableStringBuilder.ToString();
+            lStringBuilder.Append("<tr>");
+            foreach (var lColumn in this.mApplicableColumns)
+            {
+                var lStringFormat = lColumn.IsNumeric ? lcNumericFormat : lcTextFormat;
+                lStringBuilder.AppendFormat(lStringFormat, lColumn.GetTotalValue(this.mSummaries));
+            }
+            lStringBuilder.Append("</tr>");
 
-            var lBodyBuilder = new TagBuilder("body");
-            lBodyBuilder.InnerHtml = lTableBuilder.ToString();
+            lStringBuilder.Append("</table>");
 
-            const string lcCssPath = @"https://s0.wp.com/wp-content/themes/pub/twentyten/style.css";
-            var lLinkBuilder = new TagBuilder("link");
-            lLinkBuilder.Attributes.Add("rel", "stylesheet");
-            lLinkBuilder.Attributes.Add("type", "text/css");
-            lLinkBuilder.Attributes.Add("media", "all");
-            lLinkBuilder.Attributes.Add("href", lcCssPath);
+            this.mBodyHtml = lStringBuilder.ToString();
 
-            var lHeadBuilder = new TagBuilder("head");
-            lHeadBuilder.InnerHtml = lLinkBuilder.ToString();
+            lStringBuilder.Insert(0, "<div id=\"wrapper\" class=\"hfeed\"><div id=\"main\"><div id=\"container\"><div id=\"content\" role=\"main\"><div class=\"post type-post\"><div class=\"entry-content\">");
+            lStringBuilder.Insert(0, "<body class=\"home blog logged-in admin-bar no-customize-support custom-background mp6 customizer-styles-applied highlander-enabled highlander-light infinite-scroll neverending\">");
+            lStringBuilder.Insert(0, "</head>");
+            lStringBuilder.Insert(0, string.Format("<link rel=\"{0}\" type=\"{1}\" media=\"{2}\" href=\"{3}\" />", "stylesheet", "text/css", "all", lcCssPath));
+            lStringBuilder.Insert(0, "<head>");
+            lStringBuilder.Insert(0, "<html>");
 
-            var lHtmlBuilder = new TagBuilder("html");
-            lHtmlBuilder.InnerHtml = string.Concat(lHeadBuilder, lBodyBuilder);
+            lStringBuilder.Append("</div></div></div></div></div></div>");
+            lStringBuilder.Append("</body>");
+            lStringBuilder.Append("</html>");
 
-            this.mFullHtml = lHtmlBuilder.ToString();
-            this.mBodyHtml = lTableBuilder.ToString();
+            this.mFullHtml = lStringBuilder.ToString();
 
             this.mIsLoaded = true;
         }

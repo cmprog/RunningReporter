@@ -18,11 +18,11 @@
         <runningReporter:ReporterViewModel />
     </Window.DataContext>
     
-    <StackPanel>
-        <GroupBox Header="DropBox Path">
+    <DockPanel>
+        <GroupBox DockPanel.Dock="Top" Header="DropBox Path">
             <TextBox Text="{Binding BaseDirectoryPath, UpdateSourceTrigger=PropertyChanged}" />
         </GroupBox>
-        <GroupBox Header="Time Range">
+        <GroupBox DockPanel.Dock="Top" Header="Time Range">
             <StackPanel Orientation="Horizontal">
                 <Button DataContext="{Binding PreviousWeekCommand}" Style="{StaticResource mCommandButtonStyle}"/>
                 <Label Content="From" VerticalContentAlignment="Center"/>
@@ -32,12 +32,13 @@
                 <Button DataContext="{Binding NextWeekCommand}" Style="{StaticResource mCommandButtonStyle}"/>
             </StackPanel>
         </GroupBox>
+
+        <Button DockPanel.Dock="Bottom" DataContext="{Binding ClipboardCommand}" Style="{StaticResource mCommandButtonStyle}"/>
+
         <GroupBox Header="Results">
-            <WebBrowser
-                Height="500"
-                runningReporter:BrowserBehavior.Html="{Binding RenderedHtml}"/>
+            <WebBrowser runningReporter:BrowserBehavior.Html="{Binding RenderedHtml}"/>
         </GroupBox>
-        <Button DataContext="{Binding ClipboardCommand}" Style="{StaticResource mCommandButtonStyle}"/>
-    </StackPanel>
+        
+    </DockPanel>
     
 </Window>
